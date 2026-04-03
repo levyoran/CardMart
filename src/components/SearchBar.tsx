@@ -79,20 +79,20 @@ export const SearchBar: React.FC = () => {
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="חיפוש קלפים..."
-          className="w-full px-4 py-2 pr-10 bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-400"
+          className="w-full px-4 py-2 pl-10 bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-400 text-right"
         />
 
         {query && (
           <button
             onClick={handleClear}
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
           >
             <X size={18} />
           </button>
         )}
 
         {!query && (
-          <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <Search size={18} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
         )}
       </div>
 
@@ -102,7 +102,7 @@ export const SearchBar: React.FC = () => {
             <button
               key={product.id}
               onClick={() => handleSuggestionClick(product.id)}
-              className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 text-right transition"
+              className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 text-right transition flex-row-reverse"
             >
               {product.emoji && <span className="text-2xl flex-shrink-0">{product.emoji}</span>}
               {product.image_url && !product.emoji && (

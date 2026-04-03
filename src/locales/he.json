@@ -196,5 +196,54 @@
     "failed": "❌ נכשל",
     "viewDetails": "צפה בפרטים",
     "backToAccount": "חזור לחשבון"
+  },
+  "filters": {
+    "brand": "מותג",
+    "series": "סדרה",
+    "inStock": "במלאי בלבד",
+    "newest": "חדש לישן",
+    "oldest": "ישן לחדש",
+    "price_asc": "זול ליקר",
+    "price_desc": "יקר לזול",
+    "rating": "דירוג",
+    "results": "תוצאים",
+    "noProducts": "לא נמצאו מוצרים",
+    "searchResults": "תוצאות חיפוש",
+    "cancel": "בטל"
+  },
+  "navbar": {
+    "home": "דף הבית",
+    "contact": "צור קשר",
+    "about": "אודות",
+    "faq": "שאלות נפוצות"
+  },
+  "sidebar": {
+    "clear": "נקה",
+    "price": "מחיר",
+    "from": "מ",
+    "to": "עד",
+    "badges": "תגיות",
+    "status": "סטטוס",
+    "inStockOnly": "במלאי בלבד"
+  },
+  "contact": {
+    "title": "צור קשר איתנו",
+    "subtitle": "יש שאלות? אנחנו כאן כדי לעזור!",
+    "sendMessage": "שלח הודעה",
+    "contactInfo": "פרטי התקשרות",
+    "fullName": "שם מלא",
+    "email": "דוא\"ל",
+    "subject": "נושא",
+    "subjectPlaceholder": "נושא ההודעה",
+    "message": "הודעה",
+    "messagePlaceholder": "כתוב את הודעתך כאן...",
+    "send": "שלח הודעה",
+    "sending": "שולח...",
+    "successMessage": "✓ תודה! ההודעה שלך נשלחה בהצלחה. נחזור אליך בקרוב.",
+    "emailLabel": "דוא\"ל",
+    "phoneLabel": "טלפון",
+    "addressLabel": "כתובת",
+    "responseTime": "זמן תגובה ממוצע: עד 24 שעות",
+    "address": "תל אביב, ישראל"
   }
 }

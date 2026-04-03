@@ -94,7 +94,7 @@ export const Carousel: React.FC<CarouselProps> = ({
             }`}
           >
             {/* Background */}
-            <div className={`${s.bgColor} w-full h-full flex items-center justify-between px-8 md:px-16`} dir="rtl">
+            <div className={`${s.bgColor} w-full h-full flex items-center justify-between px-8 md:px-16`}>
               {/* Content */}
               <div className="flex flex-col justify-center z-10 flex-1">
                 <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-3">

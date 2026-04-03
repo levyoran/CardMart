@@ -22,6 +22,8 @@ export interface Product {
   rating: number;
   reviews_count: number;
   badge?: 'new' | 'sale' | 'hot';
+  brand?: string;
+  series?: string;
   created_at: string;
   updated_at: string;
 }

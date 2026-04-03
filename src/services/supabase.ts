@@ -89,6 +89,73 @@ export const products = {
     return data
   },
 
+  async getWithFilters(filters: {
+    category?: string
+    searchQuery?: string
+    brand?: string
+    series?: string
+    inStock?: boolean
+    badge?: string
+    sortBy?: string
+    minPrice?: number
+    maxPrice?: number
+  }) {
+    let query = supabase.from('products').select('*')
+
+    // Apply filters
+    if (filters.category && filters.category !== 'All') {
+      query = query.eq('category', filters.category)
+    }
+
+    if (filters.brand) {
+      query = query.eq('brand', filters.brand)
+    }
+
+    if (filters.series) {
+      query = query.eq('series', filters.series)
+    }
+
+    if (filters.badge) {
+      query = query.eq('badge', filters.badge)
+    }
+
+    if (filters.inStock === true) {
+      query = query.eq('in_stock', true)
+    }
+
+    if (filters.minPrice !== undefined) {
+      query = query.gte('price', filters.minPrice)
+    }
+
+    if (filters.maxPrice !== undefined) {
+      query = query.lte('price', filters.maxPrice)
+    }
+
+    if (filters.searchQuery) {
+      query = query.or(
+        `name.ilike.%${filters.searchQuery}%,description.ilike.%${filters.searchQuery}%`
+      )
+    }
+
+    // Apply sorting
+    if (filters.sortBy === 'price_asc') {
+      query = query.order('price', { ascending: true })
+    } else if (filters.sortBy === 'price_desc') {
+      query = query.order('price', { ascending: false })
+    } else if (filters.sortBy === 'rating') {
+      query = query.order('rating', { ascending: false })
+    } else if (filters.sortBy === 'oldest') {
+      query = query.order('created_at', { ascending: true })
+    } else {
+      // Default: newest first
+      query = query.order('created_at', { ascending: false })
+    }
+
+    const { data, error } = await query
+    if (error) throw error
+    return data
+  },
+
   async create(product: any) {
     const { data, error } = await supabase
       .from('products')

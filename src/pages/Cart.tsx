@@ -12,7 +12,7 @@ export const Cart: React.FC = () => {
 
   if (items.length === 0) {
     return (
-      <main className="min-h-screen bg-gray-50 py-12" dir="rtl">
+      <main className="min-h-screen bg-gray-50 py-12">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <div className="bg-white rounded-lg p-12">
             <p className="text-3xl mb-4">🛒</p>
@@ -33,7 +33,7 @@ export const Cart: React.FC = () => {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 py-12" dir="rtl">
+    <main className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-6xl mx-auto px-4">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">{t('cart.shoppingCart')}</h1>
 

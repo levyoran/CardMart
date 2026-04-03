@@ -142,7 +142,7 @@ export const AdminDashboard: React.FC = () => {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50" dir="rtl">
+    <main className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Back Button */}
         <button
@@ -192,7 +192,7 @@ export const AdminDashboard: React.FC = () => {
 
         {/* Products List Tab */}
         {activeTab === 'products' && (
-          <div dir="rtl">
+          <div>
             <div className="mb-6">
               <input
                 type="text"

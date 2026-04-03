@@ -35,7 +35,7 @@ export const Orders: React.FC = () => {
 
   if (!user) {
     return (
-      <main className="min-h-screen bg-gray-50 py-12" dir="rtl">
+      <main className="min-h-screen bg-gray-50 py-12">
         <div className="max-w-4xl mx-auto px-4">
           <button
             onClick={() => navigate('/')}
@@ -59,7 +59,7 @@ export const Orders: React.FC = () => {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 py-12" dir="rtl">
+    <main className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-6xl mx-auto px-4">
         <button
           onClick={() => navigate('/account')}

@@ -45,7 +45,7 @@ export const ProductDetail: React.FC = () => {
 
   if (isLoading) {
     return (
-      <main className="min-h-screen bg-gray-50 py-12" dir="rtl">
+      <main className="min-h-screen bg-gray-50 py-12">
         <div className="flex justify-center items-center h-64">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-orange-500"></div>
         </div>
@@ -55,7 +55,7 @@ export const ProductDetail: React.FC = () => {
 
   if (error || !product) {
     return (
-      <main className="min-h-screen bg-gray-50 py-12" dir="rtl">
+      <main className="min-h-screen bg-gray-50 py-12">
         <div className="max-w-4xl mx-auto px-4">
           <button
             onClick={() => navigate('/')}
@@ -77,7 +77,7 @@ export const ProductDetail: React.FC = () => {
     : 0
 
   return (
-    <main className="min-h-screen bg-gray-50 py-12" dir="rtl">
+    <main className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-6xl mx-auto px-4">
         {/* Back Button */}
         <button

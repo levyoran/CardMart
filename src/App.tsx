@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useAuthStore } from './store/authStore'
+import { useLanguageStore } from './store/languageStore'
 import { Header } from './components/Header'
+import { Navbar } from './components/Navbar'
 import { Home } from './pages/Home'
 import { Login } from './pages/Login'
 import { Signup } from './pages/Signup'
@@ -14,13 +16,20 @@ import { AdminUsers } from './pages/AdminUsers'
 import { ProductDetail } from './pages/ProductDetail'
 import { Account } from './pages/Account'
 import { Orders } from './pages/Orders'
+import { Contact } from './pages/Contact'
 
 function App() {
   const { initialize, isLoading } = useAuthStore()
+  const language = useLanguageStore((state) => state.language)
 
   useEffect(() => {
     initialize()
   }, [])
+
+  useEffect(() => {
+    document.documentElement.dir = language === 'he' ? 'rtl' : 'ltr'
+    document.documentElement.lang = language
+  }, [language])
 
   if (isLoading) {
     return (
@@ -35,8 +44,9 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-gray-50" dir="rtl" lang="he">
+      <div className="min-h-screen bg-gray-50" dir={language === 'he' ? 'rtl' : 'ltr'} lang={language}>
         <Header />
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<ProductDetail />} />
@@ -46,6 +56,7 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/account" element={<Account />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/contact" element={<Contact />} />
 
           {/* Admin Routes */}
           <Route path="/admin" element={<AdminOverview />} />

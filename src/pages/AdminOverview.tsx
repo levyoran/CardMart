@@ -63,7 +63,7 @@ export const AdminOverview: React.FC = () => {
 
   if (isLoading) {
     return (
-      <main className="min-h-screen bg-gray-50 py-12" dir="rtl">
+      <main className="min-h-screen bg-gray-50 py-12">
         <div className="flex justify-center items-center h-64">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-orange-500"></div>
         </div>
@@ -72,7 +72,7 @@ export const AdminOverview: React.FC = () => {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 py-12" dir="rtl">
+    <main className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-7xl mx-auto px-4">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">📊 לוח בקרה מנהל</h1>
 

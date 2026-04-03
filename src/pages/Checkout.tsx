@@ -126,7 +126,7 @@ export const Checkout: React.FC = () => {
 
   if (step === 'confirmation') {
     return (
-      <main className="min-h-screen bg-gray-50 py-12" dir="rtl">
+      <main className="min-h-screen bg-gray-50 py-12">
         <div className="max-w-md mx-auto px-4">
           <div className="bg-white rounded-lg p-8 text-center">
             <div className="text-5xl mb-4">✅</div>
@@ -152,7 +152,7 @@ export const Checkout: React.FC = () => {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 py-12" dir="rtl">
+    <main className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Checkout Form */}
