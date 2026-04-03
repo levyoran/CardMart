@@ -45,7 +45,7 @@ export const Home: React.FC = () => {
     }
 
     fetchProducts()
-  }, [selectedCategory, searchQuery, t])
+  }, [selectedCategory, searchQuery])
 
   return (
     <main className="min-h-screen bg-gray-50" dir="rtl">
