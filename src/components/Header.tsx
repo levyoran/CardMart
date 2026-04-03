@@ -1,9 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { ShoppingCart, LogOut, Settings } from 'lucide-react'
+import { ShoppingCart, LogOut, Settings, User } from 'lucide-react'
 import { useAuthStore } from '../store/authStore'
 import { useCartStore } from '../store/cartStore'
 import { useTranslation } from '../hooks/useTranslation'
+import { SearchBar } from './SearchBar'
 
 export const Header: React.FC = () => {
   const { user, signOut } = useAuthStore()
@@ -26,23 +27,20 @@ export const Header: React.FC = () => {
             />
           </Link>
 
-          <div className="flex-1 max-w-md mx-auto">
-            <input
-              type="text"
-              placeholder={t('header.search')}
-              className="w-full px-4 py-2 bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-400"
-            />
-          </div>
+          <SearchBar />
 
           <nav className="flex items-center gap-6">
             {user?.role === 'admin' && (
-              <Link
-                to="/admin"
-                className="flex items-center gap-2 text-gray-700 hover:text-orange-500 transition"
-              >
-                <Settings size={20} />
-                {t('header.admin')}
-              </Link>
+              <div className="flex items-center gap-4">
+                <Link
+                  to="/admin"
+                  className="flex items-center gap-2 text-gray-700 hover:text-orange-500 transition"
+                  title="Admin Overview"
+                >
+                  <Settings size={20} />
+                  {t('header.admin')}
+                </Link>
+              </div>
             )}
 
             <Link
@@ -59,8 +57,14 @@ export const Header: React.FC = () => {
             </Link>
 
             {user ? (
-              <div className="flex items-center gap-4">
-                <span className="text-sm text-gray-700">{user.email}</span>
+              <div className="flex items-center gap-3">
+                <Link
+                  to="/account"
+                  className="flex items-center gap-2 text-gray-700 hover:text-orange-500 transition"
+                >
+                  <User size={20} />
+                  חשבון
+                </Link>
                 <button
                   onClick={handleLogout}
                   className="flex items-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition"

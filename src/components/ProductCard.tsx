@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Plus } from 'lucide-react'
 import { Product } from '../types'
 import { useCartStore } from '../store/cartStore'
@@ -11,7 +12,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const [showToast, setShowToast] = useState(false)
   const addItem = useCartStore((state) => state.addItem)
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault()
     addItem(product, 1)
     setShowToast(true)
     setTimeout(() => setShowToast(false), 2500)
@@ -22,7 +24,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     : 0
 
   return (
-    <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition overflow-hidden group relative">
+    <Link to={`/product/${product.id}`} className="block">
+      <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition overflow-hidden group relative">
       {/* Badge */}
       {product.badge && (
         <div className={`absolute top-3 right-3 z-10 px-2 py-1 rounded text-white text-xs font-bold ${
@@ -110,6 +113,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           Added to cart!
         </div>
       )}
-    </div>
+      </div>
+    </Link>
   )
 }

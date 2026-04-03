@@ -79,6 +79,16 @@ export const products = {
     return data
   },
 
+  async search(query: string) {
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .or(`name.ilike.%${query}%,description.ilike.%${query}%,category.ilike.%${query}%`)
+      .limit(6)
+    if (error) throw error
+    return data
+  },
+
   async create(product: any) {
     const { data, error } = await supabase
       .from('products')

@@ -8,6 +8,12 @@ import { Signup } from './pages/Signup'
 import { Cart } from './pages/Cart'
 import { Checkout } from './pages/Checkout'
 import { AdminDashboard } from './pages/AdminDashboard'
+import { AdminOverview } from './pages/AdminOverview'
+import { AdminOrders } from './pages/AdminOrders'
+import { AdminUsers } from './pages/AdminUsers'
+import { ProductDetail } from './pages/ProductDetail'
+import { Account } from './pages/Account'
+import { Orders } from './pages/Orders'
 
 function App() {
   const { initialize, isLoading } = useAuthStore()
@@ -33,11 +39,20 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
-          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/orders" element={<Orders />} />
+
+          {/* Admin Routes */}
+          <Route path="/admin" element={<AdminOverview />} />
+          <Route path="/admin/products" element={<AdminDashboard />} />
+          <Route path="/admin/orders" element={<AdminOrders />} />
+          <Route path="/admin/users" element={<AdminUsers />} />
+
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>

@@ -3,26 +3,28 @@ import { Link } from 'react-router-dom'
 import { Trash2, Minus, Plus } from 'lucide-react'
 import { useCartStore } from '../store/cartStore'
 import { useAuthStore } from '../store/authStore'
+import { useTranslation } from '../hooks/useTranslation'
 
 export const Cart: React.FC = () => {
   const { items, removeItem, updateQuantity, getTotal } = useCartStore()
   const { user } = useAuthStore()
+  const { t } = useTranslation()
 
   if (items.length === 0) {
     return (
-      <main className="min-h-screen bg-gray-50 py-12">
+      <main className="min-h-screen bg-gray-50 py-12" dir="rtl">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <div className="bg-white rounded-lg p-12">
             <p className="text-3xl mb-4">🛒</p>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Your cart is empty</h1>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('cart.empty')}</h1>
             <p className="text-gray-500 mb-6">
-              Discover amazing TCG cards and add them to your cart
+              {t('cart.discoverCards')}
             </p>
             <Link
               to="/"
               className="inline-block px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition font-semibold"
             >
-              Continue Shopping
+              {t('cart.continueShopping')}
             </Link>
           </div>
         </div>
@@ -31,9 +33,9 @@ export const Cart: React.FC = () => {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 py-12">
+    <main className="min-h-screen bg-gray-50 py-12" dir="rtl">
       <div className="max-w-6xl mx-auto px-4">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Shopping Cart</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-8">{t('cart.shoppingCart')}</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Cart Items */}
@@ -120,21 +122,21 @@ export const Cart: React.FC = () => {
 
               <div className="space-y-3 pb-4 border-b mb-4">
                 <div className="flex justify-between text-gray-700">
-                  <span>Subtotal</span>
+                  <span>{t('cart.subtotal')}</span>
                   <span>₪{getTotal().toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-gray-700">
-                  <span>Shipping</span>
-                  <span className="text-green-600 font-semibold">Free</span>
+                  <span>{t('cart.shipping')}</span>
+                  <span className="text-green-600 font-semibold">{t('cart.free')}</span>
                 </div>
                 <div className="flex justify-between text-gray-700">
-                  <span>Tax (17%)</span>
+                  <span>{t('cart.tax')}</span>
                   <span>₪{(getTotal() * 0.17).toFixed(2)}</span>
                 </div>
               </div>
 
               <div className="flex justify-between text-xl font-bold text-gray-900 mb-6">
-                <span>Total</span>
+                <span>{t('cart.total')}</span>
                 <span className="text-orange-500">
                   ₪{(getTotal() * 1.17).toFixed(2)}
                 </span>
@@ -145,24 +147,24 @@ export const Cart: React.FC = () => {
                   to="/checkout"
                   className="w-full block text-center px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition font-bold"
                 >
-                  Proceed to Checkout
+                  {t('cart.proceedCheckout')}
                 </Link>
               ) : (
                 <div className="space-y-2">
                   <p className="text-sm text-gray-600 text-center mb-3">
-                    Please log in to proceed with checkout
+                    {t('cart.pleaseLogin')}
                   </p>
                   <Link
                     to="/login"
                     className="w-full block text-center px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition font-bold"
                   >
-                    Log In to Checkout
+                    {t('header.login')}
                   </Link>
                   <Link
                     to="/signup"
                     className="w-full block text-center px-6 py-2 bg-gray-200 text-gray-900 rounded-lg hover:bg-gray-300 transition font-bold"
                   >
-                    Create Account
+                    {t('cart.createAccount')}
                   </Link>
                 </div>
               )}
@@ -171,7 +173,7 @@ export const Cart: React.FC = () => {
                 to="/"
                 className="w-full block text-center mt-4 px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:border-orange-500 transition font-semibold"
               >
-                Continue Shopping
+                {t('cart.continueShopping')}
               </Link>
             </div>
           </div>

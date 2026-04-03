@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { ProductCard } from '../components/ProductCard'
+import { Carousel } from '../components/Carousel'
 import { Product } from '../types'
 import { products as productsService } from '../services/supabase'
 import { useTranslation } from '../hooks/useTranslation'
@@ -10,6 +12,8 @@ export const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const { t } = useTranslation()
+  const [searchParams] = useSearchParams()
+  const searchQuery = searchParams.get('search')
 
   const categories = [
     { key: 'All', label: t('categories.all') },
@@ -24,7 +28,9 @@ export const Home: React.FC = () => {
       try {
         setIsLoading(true)
         let data
-        if (selectedCategory === 'All') {
+        if (searchQuery) {
+          data = await productsService.search(searchQuery)
+        } else if (selectedCategory === 'All') {
           data = await productsService.getAll()
         } else {
           data = await productsService.getByCategory(selectedCategory)
@@ -39,50 +45,50 @@ export const Home: React.FC = () => {
     }
 
     fetchProducts()
-  }, [selectedCategory])
+  }, [selectedCategory, searchQuery, t])
 
   return (
     <main className="min-h-screen bg-gray-50" dir="rtl">
-      {/* Hero Banner */}
-      <section className="bg-gradient-to-r from-navy-900 via-navy-800 to-orange-500 text-white py-12 px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl font-bold mb-4">
-            {t('home.title')}
-          </h1>
-          <p className="text-lg opacity-90 mb-6">
-            {t('home.subtitle')}
-          </p>
-          <div className="flex gap-4 justify-center">
-            <button className="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 font-semibold transition">
-              {t('home.shopNow')}
-            </button>
-            <button className="px-6 py-2 bg-white text-navy-900 rounded-lg hover:bg-gray-100 font-semibold transition">
-              {t('home.learnMore')}
-            </button>
-          </div>
+      {/* Carousel Banner */}
+      <section className="px-4 py-6">
+        <div className="max-w-7xl mx-auto">
+          <Carousel />
         </div>
       </section>
 
-      {/* Category Filter */}
-      <section className="bg-white border-b sticky top-16 z-40" dir="rtl">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex gap-2 overflow-x-auto py-4 flex-row-reverse">
-            {categories.map((category) => (
-              <button
-                key={category.key}
-                onClick={() => setSelectedCategory(category.key)}
-                className={`px-4 py-2 rounded-lg font-semibold whitespace-nowrap transition ${
-                  selectedCategory === category.key
-                    ? 'bg-orange-500 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                {category.label}
-              </button>
-            ))}
+      {/* Search Results Heading or Category Filter */}
+      {searchQuery ? (
+        <section className="bg-white border-b sticky top-16 z-40" dir="rtl">
+          <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            <h2 className="text-xl font-bold text-gray-800">
+              תוצאות חיפוש עבור: <span className="text-orange-500">"{searchQuery}"</span>
+            </h2>
+            <a href="/" className="text-orange-500 hover:text-orange-600 font-semibold">
+              × בטל חיפוש
+            </a>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : (
+        <section className="bg-white border-b sticky top-16 z-40" dir="rtl">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="flex gap-2 overflow-x-auto py-4 flex-row-reverse">
+              {categories.map((category) => (
+                <button
+                  key={category.key}
+                  onClick={() => setSelectedCategory(category.key)}
+                  className={`px-4 py-2 rounded-lg font-semibold whitespace-nowrap transition ${
+                    selectedCategory === category.key
+                      ? 'bg-orange-500 text-white'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  {category.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Products Grid */}
       <section className="max-w-7xl mx-auto px-4 py-12">

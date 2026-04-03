@@ -4,6 +4,7 @@ import { useCartStore } from '../store/cartStore'
 import { useAuthStore } from '../store/authStore'
 import { orders } from '../services/supabase'
 import { processPayment } from '../services/stripe'
+import { useTranslation } from '../hooks/useTranslation'
 
 interface FormData {
   fullName: string
@@ -21,6 +22,7 @@ export const Checkout: React.FC = () => {
   const navigate = useNavigate()
   const { items, getTotal, clearCart } = useCartStore()
   const { user } = useAuthStore()
+  const { t } = useTranslation()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [step, setStep] = useState<'shipping' | 'payment' | 'confirmation'>('shipping')
@@ -124,16 +126,16 @@ export const Checkout: React.FC = () => {
 
   if (step === 'confirmation') {
     return (
-      <main className="min-h-screen bg-gray-50 py-12">
+      <main className="min-h-screen bg-gray-50 py-12" dir="rtl">
         <div className="max-w-md mx-auto px-4">
           <div className="bg-white rounded-lg p-8 text-center">
             <div className="text-5xl mb-4">✅</div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Order Confirmed!</h1>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('checkout.orderConfirmed')}</h1>
             <p className="text-gray-600 mb-6">
-              Thank you for your purchase. Your order has been successfully processed.
+              {t('checkout.thankYou')}
             </p>
             <p className="text-sm text-gray-500 mb-6">
-              A confirmation email has been sent to {formData.email}
+              {t('checkout.confirmationSent')} {formData.email}
             </p>
             <button
               onClick={() => {
@@ -141,7 +143,7 @@ export const Checkout: React.FC = () => {
               }}
               className="w-full px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition font-bold"
             >
-              Continue Shopping
+              {t('cart.continueShopping')}
             </button>
           </div>
         </div>
@@ -150,7 +152,7 @@ export const Checkout: React.FC = () => {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 py-12">
+    <main className="min-h-screen bg-gray-50 py-12" dir="rtl">
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Checkout Form */}

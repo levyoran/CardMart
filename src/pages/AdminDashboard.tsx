@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Edit2, Trash2, Plus, ToggleLeft, ToggleRight, DollarSign } from 'lucide-react'
+import { Edit2, Trash2, Plus, ToggleLeft, ToggleRight, DollarSign, ArrowLeft } from 'lucide-react'
 import { useAuthStore } from '../store/authStore'
 import { products as productsService } from '../services/supabase'
 import { Product } from '../types'
+import { useTranslation } from '../hooks/useTranslation'
 
 type TabType = 'products' | 'add-product' | 'inventory'
 
 export const AdminDashboard: React.FC = () => {
   const navigate = useNavigate()
   const { user } = useAuthStore()
+  const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState<TabType>('products')
   const [products, setProducts] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -140,16 +142,25 @@ export const AdminDashboard: React.FC = () => {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-gray-50" dir="rtl">
       <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* Back Button */}
+        <button
+          onClick={() => navigate('/admin')}
+          className="flex items-center gap-2 text-orange-500 hover:text-orange-600 mb-6"
+        >
+          <ArrowLeft size={20} />
+          חזור לדשבורד
+        </button>
+
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Admin Dashboard</h1>
-          <p className="text-gray-600">Manage products, inventory, and pricing</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">📦 ניהול מוצרים</h1>
+          <p className="text-gray-600">ערוך, הוסף ומחק מוצרים וניהול מלאי</p>
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 mb-6 border-b">
+        <div className="flex gap-2 mb-6 border-b flex-row-reverse">
           {(['products', 'inventory', 'add-product'] as TabType[]).map((tab) => (
             <button
               key={tab}
@@ -160,9 +171,9 @@ export const AdminDashboard: React.FC = () => {
                   : 'border-transparent text-gray-600 hover:text-gray-900'
               }`}
             >
-              {tab === 'products' && '📦 Products'}
-              {tab === 'inventory' && '📊 Inventory'}
-              {tab === 'add-product' && '➕ Add Product'}
+              {tab === 'products' && '📦 מוצרים'}
+              {tab === 'inventory' && '📊 מלאי'}
+              {tab === 'add-product' && '➕ הוסף מוצר'}
             </button>
           ))}
         </div>
@@ -181,11 +192,11 @@ export const AdminDashboard: React.FC = () => {
 
         {/* Products List Tab */}
         {activeTab === 'products' && (
-          <div>
+          <div dir="rtl">
             <div className="mb-6">
               <input
                 type="text"
-                placeholder="Search products..."
+                placeholder="חיפוש מוצרים..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"

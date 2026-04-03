@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { User } from '../types'
-import { auth } from '../services/supabase'
+import { auth, userProfile } from '../services/supabase'
 
 interface AuthStore {
   user: User | null
@@ -39,29 +39,47 @@ export const useAuthStore = create<AuthStore>((set) => ({
   },
 
   signIn: async (email, password) => {
-    set({ isLoading: true, error: null })
-    try {
-      const data = await auth.signIn(email, password)
-      if (data.user) {
+  set({ isLoading: true, error: null })
+  try {
+    const data = await auth.signIn(email, password)
+    if (data.user) {
+      try {
+        // קח את ה-role מה-database
+        const profile = await userProfile.getProfile(data.user.id)
+        
+        set({
+          user: {
+            id: data.user.id,
+            email: data.user.email || '',
+            full_name: profile?.full_name || data.user.user_metadata?.full_name || '',
+            role: profile?.role || 'customer',
+            created_at: data.user.created_at || new Date().toISOString(),
+          },
+          isLoading: false,
+        })
+      } catch (err) {
+        // אם אין profile, השתמש ב-default
         set({
           user: {
             id: data.user.id,
             email: data.user.email || '',
             full_name: data.user.user_metadata?.full_name || '',
-            role: data.user.user_metadata?.role || 'customer',
+            role: 'customer',
             created_at: data.user.created_at || new Date().toISOString(),
           },
           isLoading: false,
         })
       }
-    } catch (error: any) {
-      set({
-        error: error.message || 'Failed to sign in',
-        isLoading: false,
-      })
-      throw error
     }
-  },
+  } catch (error: any) {
+    set({
+      error: error.message || 'Failed to sign in',
+      isLoading: false,
+    })
+    throw error
+  }
+},
+
 
   signOut: async () => {
     set({ isLoading: true })
@@ -76,22 +94,39 @@ export const useAuthStore = create<AuthStore>((set) => ({
 
   initialize: async () => {
     try {
-      const authUser = await auth.getCurrentUser()
-      if (authUser) {
+    const authUser = await auth.getCurrentUser()
+    console.log('🔍 Auth User:', authUser) // DEBUG
+    if (authUser) {
+      try {
+        const profile = await userProfile.getProfile(authUser.id)
+        console.log('🔍 Profile from DB:', profile) // DEBUG
+        
+        set({
+          user: {
+            id: authUser.id,
+            email: authUser.email || '',
+            full_name: profile?.full_name || authUser.user_metadata?.full_name || '',
+            role: profile?.role || 'customer',
+            created_at: authUser.created_at || new Date().toISOString(),
+          },
+        })
+      } catch (err) {
+        console.log('❌ Error getting profile:', err) // DEBUG
         set({
           user: {
             id: authUser.id,
             email: authUser.email || '',
             full_name: authUser.user_metadata?.full_name || '',
-            role: authUser.user_metadata?.role || 'customer',
+            role: 'customer',
             created_at: authUser.created_at || new Date().toISOString(),
           },
         })
       }
-    } catch (error) {
-      console.log('No authenticated user')
-    } finally {
-      set({ isLoading: false })
     }
+  } catch (error) {
+    console.log('No authenticated user')
+  } finally {
+    set({ isLoading: false })
+  }
   },
 }))
